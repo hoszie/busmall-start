@@ -1,0 +1,29 @@
+#one {
+    width: 30%;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+}
+
+#two {
+    width: 30%;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+}
+
+#three {
+    width: 30%;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+}
+
+#image-box {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    margin: 90px;
+}
+    
