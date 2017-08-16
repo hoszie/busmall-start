@@ -1,12 +1,16 @@
 'use strict'
 
-function Item (displayName, filePath, id) {
+var allItems = [];
+var totalGuesses = 0;
+var clickCount = 0;
+
+function Item ( displayName, filePath, id ) {
     this.displayName = displayName;
     this.filePath = filePath;
     this.id = id;
     this.displayCount = 0;
     this.voteCount = 0;
-}
+};
 
 var bag = new Item ( 'Bag', 'images/bag.jpg', 'bag' );
 var banana = new Item ( 'Banana', 'images/banana.jpg', 'banana' );
@@ -31,7 +35,6 @@ var wineGlass = new Item ( 'Wine Glass', 'images/wine-glass.jpg', 'wine-glass' )
 
 var imageArray = [ bag, banana, bathroom, boots, breakfast, bubbleGum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, usb, waterCan, wineGlass ];
 
-
 var previousImages = [];
 
 function displayImages() {
@@ -45,34 +48,140 @@ function displayImages() {
     } while ( threeRandomNumbers.length < 3 );
     return threeRandomNumbers;      
 };
-
-
+    
 
 function renderImages() {
-    var threeNumbers = displayImages();  
-    var elOne = document.getElementById( 'one' );
-    elOne.setAttribute( 'src', imageArray[ threeNumbers[0] ].filePath );
-
-    var elOne = document.getElementById( 'two' );
-    elOne.setAttribute( 'src', imageArray[ threeNumbers[1] ].filePath );
-
-    var elOne = document.getElementById( 'three' );
-    elOne.setAttribute( 'src', imageArray[ threeNumbers[2] ].filePath );
+    var threeNumbers = displayImages(); 
     
-    previousImages = displayImages();                    //getnonPreviousNunmbers
+    var objOne = imageArray[ threeNumbers[0] ];
+    var elOne = document.getElementById( 'one' );
+    elOne.setAttribute( 'src', objOne.filePath );
+    elOne.setAttribute( 'data-index', threeNumbers[0] );
+    objOne.displayCount ++;
+    
+   var objTwo = imageArray[ threeNumbers[1] ];
+    var elTwo = document.getElementById( 'two' );
+    elTwo.setAttribute( 'src', objTwo.filePath );
+    elTwo.setAttribute( 'data-index', threeNumbers [1] );
+    objTwo.displayCount ++;
+
+    var objThree = imageArray[ threeNumbers[2] ];
+    var elThree = document.getElementById( 'three' );
+    elThree.setAttribute( 'src', objThree.filePath );
+    elThree.setAttribute( 'data-index', threeNumbers[2] );
+    objThree.displayCount ++;
+
+    previousImages = threeNumbers;
 };
 
 function getNonPreviousNumbers() {
     previousImages = displayImages();
+    
 };
-getNonPreviousNumbers();
+
+function clickHandler ( event ) {
+    if ( clickCount < 5 ) {
+        var index = event.target.getAttribute( 'data-index' );
+        index = parseInt (index);
+        
+        imageArray[ index ].voteCount++;
+        renderImages();
+        clickCount ++;
+    } else if ( !clickCount <= 5 ) {
+        document.getElementById ( 'image-box' ).innerHTML = "";
+    }
+};
 
 
-var optionOne = document.getElementById ( 'one' );
-optionOne.addEventListener ( 'click', renderImages );
 
-var optionTwo = document.getElementById ( 'two' );
-optionTwo.addEventListener ( 'click', renderImages );
+function produceClickEvent() {
+    
+    var optionOne = document.getElementById ( 'one' );
+    optionOne.addEventListener ( 'click', clickHandler );
+    
+    var optionTwo = document.getElementById ( 'two' );
+    optionTwo.addEventListener ( 'click', clickHandler );
+    
+    var optionThree = document.getElementById ( 'three' );
+    optionThree.addEventListener ( 'click', clickHandler ); 
+    // renderImages();
+};
+renderImages();
+produceClickEvent();
 
-var optionThree = document.getElementById ( 'three' );
-optionThree.addEventListener ( 'click', renderImages );
+
+
+
+
+
+
+// function clickHandler( event ) {
+//     if ( clickCount < 5 ) {
+//         renderImages();
+//         var click = event.target.getAttribute( 'src' );
+//         for (var i = 0; i < imageArray.length; i++ ) {
+//             if( click === imageArray[i].filePath ) {
+//                 imageArray[i].voteCount++;
+//                 clickCount ++;
+//             } 
+//         }
+
+
+//     } else if ( !clickCount < 5 ) {
+//         document.getElementById ( 'image-box' ).innerHTML = "";
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+// tallyVote: function ( target ) {
+//     this.votes += 1;
+
+//     // TODO track vote on selected restaurant
+//     var selectRest = allItems [target.getAttribute( 'data-index')];
+//     selectRest.votes++;
+
+//     if ( this.voteCount > 4 ) {
+//         this.showResults();
+//     }
+// },
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var survey = document.getElementById( 'survey' );
+// survey.addEventListener( 'click', 'voteHandler' );
+
+// function voteHandler ( event ) {
+//     //determine which element was clicked
+//     //find that element's object
+//     //increase that object's votes
+
+//     //redraw the images
+
+//     console.log( event.target );
+//     var clickedElement = event.target;
+// }
+    
+  
+
+
+
