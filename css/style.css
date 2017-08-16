@@ -1,0 +1,47 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background: beige;
+}
+
+h1 {
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    font-size: 100px;
+    text-shadow: 2px 8px 7px sandybrown;
+    padding: 30px;
+}
+
+#one {
+    width: 30%;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+    border: 1px solid black;
+}
+
+#two {
+    width: 30%;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+    border: 1px solid black;
+}
+
+#three {
+    width: 30%;
+    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
+    border: 1px solid black;
+}
+
+#image-box {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-direction: row;
+}
+    
