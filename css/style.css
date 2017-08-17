@@ -10,7 +10,7 @@ h1 {
     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
     font-size: 100px;
     text-shadow: 2px 8px 7px sandybrown;
-    padding: 30px;
+    padding: 10px;
 }
 
 #one {
@@ -44,4 +44,9 @@ h1 {
     align-items: flex-start;
     flex-direction: row;
 }
-    
+
+#graph {
+    display: flex;
+    justify-content: row;
+    align-items: center;
+}
