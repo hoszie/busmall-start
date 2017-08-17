@@ -35,6 +35,11 @@ var wineGlass = new Item ( 'Wine Glass', 'images/wine-glass.jpg', 'wine-glass' )
 
 var imageArray = [ bag, banana, bathroom, boots, breakfast, bubbleGum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, usb, waterCan, wineGlass ];
 
+var storedImages = getFromLS();
+imageArray = storedImages; 
+
+
+console.log(storedImages)
 var previousImages = [];
 
 function displayImages() {
@@ -80,19 +85,25 @@ function getNonPreviousNumbers() {
 };
 
 function clickHandler ( event ) {
-    if ( clickCount < 5 ) {
+    if ( clickCount < 10 ) {
         var index = event.target.getAttribute( 'data-index' );
+        console.log( index );
         index = parseInt (index);
         
         imageArray[ index ].voteCount++;
         renderImages();
         clickCount ++;
-    } else if ( !clickCount <= 5 ) {
+    } else if ( !clickCount <= 10 ) {
         document.getElementById ( 'image-box' ).innerHTML = "";
-    }
+        showChart();
+        console.log(showChart);
+        saveToLS();
+    }   
 };
 
-
+function getFromLS() {
+    return JSON.parse ( localStorage.getItem ( 'images' ) );
+};
 
 function produceClickEvent() {
     
@@ -109,9 +120,39 @@ function produceClickEvent() {
 renderImages();
 produceClickEvent();
 
+function showChart() {
+var chartCanvas = document.getElementById ( 'graph' ).getContext ('2d' );
 
+var items = new Chart ( chartCanvas, {
+    type: 'bar',
+    data: {
+        labels: [ 'Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog-Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Demeaning Baby Sweeper', 'Sick Sleeping Bag', 'Faker Meat than SPAM', 'USB', 'Watering Can', 'Wine Glass' ],
+        datasets: [{
+            label: '# of votes',
+            data: imageArray.map(function(display){return display.voteCount; } ),
+            backgroundColor: [ 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988' ],
+            borderColor: [ 'black' ],
+            borderWidth: 1,
+        }]
+    },
+    option: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+}
 
-
+function saveToLS ( ) {
+    var str = JSON.stringify ( imageArray );
+    localStorage.setItem ( 'images', str );
+}
+console.log(saveToLS);
+saveToLS();
 
 
 
@@ -131,38 +172,6 @@ produceClickEvent();
 //         document.getElementById ( 'image-box' ).innerHTML = "";
 //     }
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-// tallyVote: function ( target ) {
-//     this.votes += 1;
-
-//     // TODO track vote on selected restaurant
-//     var selectRest = allItems [target.getAttribute( 'data-index')];
-//     selectRest.votes++;
-
-//     if ( this.voteCount > 4 ) {
-//         this.showResults();
-//     }
-// },
-
-
-
-
-
-
-
-
-
 
 
 
