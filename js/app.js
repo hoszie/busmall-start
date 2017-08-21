@@ -12,7 +12,7 @@ function Item ( displayName, filePath, id ) {
     this.voteCount = 0;
 };
 
-var bag = new Item ( 'Bag', 'images/bag.jpg', 'bag' );
+var bag = new Item ( 'R2-D2 Bag', 'images/bag.jpg', 'bag' );
 var banana = new Item ( 'Banana', 'images/banana.jpg', 'banana' );
 var bathroom = new Item ( 'Bathroom', 'images/bathroom.jpg', 'bathroom' );
 var boots = new Item ( 'Boots', 'images/boots.jpg', 'boots' );
@@ -21,7 +21,7 @@ var bubbleGum = new Item ( 'Bubblegum', 'images/bubblegum.jpg', 'bubblegum' );
 var chair = new Item ( 'Chair', 'images/chair.jpg', 'chair' );
 var cthulhu = new Item ( 'Cthulhu', 'images/cthulhu.jpg', 'cthulhu' );
 var dogDuck = new Item ( 'Dog-Duck', 'images/dog-duck.jpg', 'dog-duck' );
-var dragon = new Item ( 'Dragon', 'images/dragon.jpg', 'dragon' );
+var dragon = new Item ( 'Khaleesi\'s Kids', 'images/dragon.jpg', 'dragon' );
 var pen = new Item ( 'Pen', 'images/pen.jpg', 'pen' );
 var petSweep = new Item ( 'Pet Sweep', 'images/pet-sweep.jpg', 'pet-sweep' );
 var scissors = new Item ( 'Scissors', 'images/scissors.jpg', 'scissors' );
@@ -38,8 +38,6 @@ var imageArray = [ bag, banana, bathroom, boots, breakfast, bubbleGum, chair, ct
 var storedImages = getFromLS();
 imageArray = storedImages; 
 
-
-console.log(storedImages)
 var previousImages = [];
 
 function displayImages() {
@@ -64,17 +62,26 @@ function renderImages() {
     elOne.setAttribute( 'data-index', threeNumbers[0] );
     objOne.displayCount ++;
     
-   var objTwo = imageArray[ threeNumbers[1] ];
+    var nameOne = document.getElementById ( 'descriptOne' );
+    nameOne.innerText = objOne.displayName;
+    
+    var objTwo = imageArray[ threeNumbers[1] ];
     var elTwo = document.getElementById( 'two' );
     elTwo.setAttribute( 'src', objTwo.filePath );
     elTwo.setAttribute( 'data-index', threeNumbers [1] );
     objTwo.displayCount ++;
 
+    var nameTwo = document.getElementById ( 'descriptTwo' );
+    nameTwo.innerText = objTwo.displayName;
+
     var objThree = imageArray[ threeNumbers[2] ];
     var elThree = document.getElementById( 'three' );
     elThree.setAttribute( 'src', objThree.filePath );
     elThree.setAttribute( 'data-index', threeNumbers[2] );
-    objThree.displayCount ++;
+    objThree.displayCount++;
+
+    var nameThree = document.getElementById ( 'descriptThree' );
+    nameThree.innerText = objThree.displayName;
 
     previousImages = threeNumbers;
 };
@@ -85,18 +92,16 @@ function getNonPreviousNumbers() {
 };
 
 function clickHandler ( event ) {
-    if ( clickCount < 10 ) {
+    if ( clickCount < 25 ) {
         var index = event.target.getAttribute( 'data-index' );
-        console.log( index );
-        index = parseInt (index);
+        index = parseInt ( index );                               
         
         imageArray[ index ].voteCount++;
         renderImages();
         clickCount ++;
-    } else if ( !clickCount <= 10 ) {
+    } else {
         document.getElementById ( 'image-box' ).innerHTML = "";
         showChart();
-        console.log(showChart);
         saveToLS();
     }   
 };
@@ -106,7 +111,6 @@ function getFromLS() {
 };
 
 function produceClickEvent() {
-    
     var optionOne = document.getElementById ( 'one' );
     optionOne.addEventListener ( 'click', clickHandler );
     
@@ -115,81 +119,66 @@ function produceClickEvent() {
     
     var optionThree = document.getElementById ( 'three' );
     optionThree.addEventListener ( 'click', clickHandler ); 
-    // renderImages();
 };
+   
 renderImages();
 produceClickEvent();
 
 function showChart() {
 var chartCanvas = document.getElementById ( 'graph' ).getContext ('2d' );
-
 var items = new Chart ( chartCanvas, {
     type: 'bar',
+    responsive: false,
     data: {
         labels: [ 'Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog-Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Demeaning Baby Sweeper', 'Sick Sleeping Bag', 'Faker Meat than SPAM', 'USB', 'Watering Can', 'Wine Glass' ],
         datasets: [{
             label: '# of votes',
             data: imageArray.map(function(display){return display.voteCount; } ),
             backgroundColor: [ 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988', 'skyblue', '#C05688', 'navy', '#53C988' ],
-            borderColor: [ 'black' ],
             borderWidth: 1,
         }]
     },
-    option: {
+    option: { 
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                }
+            }],
+            xAxes: [{                      //My attempts at fixing the x-Axis labels. Couldn't get there
+                stacked: false,
+                    beginAtZero: true,
+                      ticks: {
+                        stepSize: 1,
+                        min: 0,
+                        autoSkip: false,
                 }
             }]
         }
-    }
+    }              
 });
+
 }
 
 function saveToLS ( ) {
     var str = JSON.stringify ( imageArray );
     localStorage.setItem ( 'images', str );
 }
-console.log(saveToLS);
+
 saveToLS();
 
-
-
-// function clickHandler( event ) {
-//     if ( clickCount < 5 ) {
-//         renderImages();
-//         var click = event.target.getAttribute( 'src' );
-//         for (var i = 0; i < imageArray.length; i++ ) {
-//             if( click === imageArray[i].filePath ) {
-//                 imageArray[i].voteCount++;
-//                 clickCount ++;
-//             } 
-//         }
-
-
-//     } else if ( !clickCount < 5 ) {
-//         document.getElementById ( 'image-box' ).innerHTML = "";
-//     }
-// }
+function produceGraphToPage() {
+    var parentElement = document.getElementById ( 'body' );
+    var div = parentElement.firstChild;
+    var canvas = document.createElement( 'canvas' );
+    body.insertBefore ( canvas, div );
+}
+produceGraphToPage();
 
 
 
 
-// var survey = document.getElementById( 'survey' );
-// survey.addEventListener( 'click', 'voteHandler' );
 
-// function voteHandler ( event ) {
-//     //determine which element was clicked
-//     //find that element's object
-//     //increase that object's votes
-
-//     //redraw the images
-
-//     console.log( event.target );
-//     var clickedElement = event.target;
-// }
-    
   
 
 
