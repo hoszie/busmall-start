@@ -31,7 +31,7 @@ var tauntaun = new Item ( 'Sick Sleeping Bag', 'images/tauntaun.jpg', 'tauntaun'
 var unicorn = new Item ( 'Faker Meat than SPAM', 'images/unicorn.jpg', 'unicorn' );
 var usb = new Item ( 'USB', 'images/usb.gif', 'usb' );
 var waterCan = new Item ( 'Watering Can', 'images/water-can.jpg', 'water-can' );
-var wineGlass = new Item ( 'Wine Glass', 'images/wine-glass.jpg', 'wine-glass' );
+var wineGlass = new Item ( 'Wino\'s Wine Glass', 'images/wine-glass.jpg', 'wine-glass' );
 
 var imageArray = [ bag, banana, bathroom, boots, breakfast, bubbleGum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, usb, waterCan, wineGlass ];
 
@@ -130,7 +130,7 @@ var items = new Chart ( chartCanvas, {
     type: 'bar',
     responsive: false,
     data: {
-        labels: [ 'Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog-Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Demeaning Baby Sweeper', 'Sick Sleeping Bag', 'Faker Meat than SPAM', 'USB', 'Watering Can', 'Wine Glass' ],
+        labels: [ 'R2-D2 Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog-Duck', 'Khaleesi\'s Kids', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Demeaning Baby Sweeper', 'Sick Sleeping Bag', 'Faker Meat than SPAM', 'USB', 'Watering Can', 'Wino\'s Wine Glass' ],
         datasets: [{
             label: '# of votes',
             data: imageArray.map(function(display){return display.voteCount; } ),
