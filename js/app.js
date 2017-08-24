@@ -35,6 +35,7 @@ var wineGlass = new Item ( 'Wino\'s Wine Glass', 'images/wine-glass.jpg', 'wine-
 
 var imageArray = [ bag, banana, bathroom, boots, breakfast, bubbleGum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, usb, waterCan, wineGlass ];
 
+saveToLS();
 var storedImages = getFromLS();
 imageArray = storedImages; 
 
